@@ -19,6 +19,14 @@ define(['config', 'key', 'number-utils'],
 			};
 
 		}
+		
+		function verticallyCenterKeyItems(node) {
+			var keyItemGroup = node.select('.fm-key-items');
+			
+			var keyItemsOffsetY = node.getBBox().cy - keyItemGroup.getBBox().cy;
+
+			keyItemGroup.transform('t' + Config.KEY_SIDE_PADDING + ',' + keyItemsOffsetY);
+		}
 
 		BubbleKey.prototype = Object.create(Key.prototype);
 
@@ -172,10 +180,11 @@ define(['config', 'key', 'number-utils'],
 			keyGroup.append(bubbleScaleGroup);
 
 			bubbleScaleGroup.transform(
-				"t" + (keyGroupBBox.x + keyGroupBBox.width - bubbleKeyBBox.width / 2 - Config.KEY_SIDE_PADDING) +
+				"t" + (this.width - bubbleKeyBBox.width / 2 - Config.KEY_SIDE_PADDING) +
 				"," + (keyGroupBBox.y + scaleOffsetY)
 			);
 
+			verticallyCenterKeyItems(this.node);
 		};
 
 		/**
